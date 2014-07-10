@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Story Line</title>
+
+	{% block javascripts %}
+		<script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
+	{% endblock %}
+
+	{% block stylesheets %}
+		<link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+		<link href="{{ asset('css/bootstrap-theme.min.css') }}" type="text/css" rel="stylesheet" />
+		<link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet" />
+	{% endblock %}
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top" id="fullstory">
+		<div class="container-fluid">
+			<span class="pull-left navbar-text">
+				show full story
+			</span>
+			<span class="pull-right glyphicon glyphicon-book navbar-text"></span>
+		</div>
+	</div>
+
+	<div class="space"></div>
+
+	<div class="container-fluid">
+
+		{% for line in lines %}
+			<div class="row">
+				<form method="POST">
+					<input type="hidden" name="new_id" value="{{ line.id }}"/>
+				</form>
+				<div class="col-xs-10">
+					<p>{{ line.text }}</p>
+				</div>
+				<div class="col-xs-1">
+					<span class="badge badge-default pull-right">
+						{% if line.has_children %}
+							<span class="glyphicon glyphicon-chevron-right"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-plus-sign"></span>
+						{% endif %}
+					</span>
+				</div>
+
+			</div>
+		{% endfor %}
+
+	</div>
+
+{#{ dump(dbTest) }#}
+
+	<div class="space"></div>
+
+	<div class="navbar navbar-inverse navbar-fixed-bottom" id="addtext">
+		<div class="container">
+			<span class="pull-left navbar-text">
+				add text line story
+			</span>
+			<span class="pull-right glyphicon glyphicon-cloud-upload navbar-text"></span>
+		</div>
+	</div>
+
+	<div class="modal fade" id="fullstory-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					{{full_story}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="addtext-modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form class="form-horizontal" method="POST" id="new_line">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="line" class="col-xs-2 control-label">Line</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="line" name="new_text" placeholder="enter next part of story"/>
+							</div>
+							<input type="hidden" name="parent_id" value="{{parent_id}}"/>
+						</div>
+					</div>
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" onclick="$('#new_line').submit();">Save</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	$(function(){
+		$('#addtext').on('click', function() {
+			$('#addtext-modal').modal('show');
+		});
+
+		$('#fullstory').on('click', function() {
+			$('#fullstory-modal').modal('show');
+		});
+
+		$('div.row').on('click',function(){
+			$(this).find('form').submit();
+		});
+
+		if(!$('div.row').length){
+			$('#addtext').trigger('click');
+		}
+	});
+	</script>
+</body>
+</html>

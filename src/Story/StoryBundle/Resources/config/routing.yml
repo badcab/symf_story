@@ -1,0 +1,3 @@
+story_story_homepage:
+    path:     /
+    defaults: { _controller: StoryStoryBundle:Default:index }

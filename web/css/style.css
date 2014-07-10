@@ -1,0 +1,25 @@
+.row {
+	background-color: black;
+	border: 2px groove #4682B4;
+	color: white;
+	font-size:2 em;
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bold;
+	margin-bottom: 7px;
+	border-radius:17px;
+	border:2px solid #4682B4;
+}
+
+.space {
+	padding-top: 55px;
+}
+
+body {
+	background-color: #2F4F4F;
+}
+
+.col-xs-1 span.badge {
+	margin-bottom: 25px;
+	margin-top: 25px;
+}
+

@@ -1,0 +1,4 @@
+story_story:
+    resource: "@StoryStoryBundle/Resources/config/routing.yml"
+    prefix:   /
+
